@@ -18,5 +18,9 @@ if (MSVC_VERSION GREATER_EQUAL "1900")
 	endif()
 endif()
 
+include_directories(${CMAKE_SOURCE_DIR})
+
 include(addTaget.cmake)
+
+include(XmlTools/XmlTools.cmake)
 include(TrajectoryViewer/TrajectoryViewer.cmake)

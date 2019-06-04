@@ -17,5 +17,8 @@ public:
 	~MainWindow();
 
 private:
+	void OnOpenXmlFile();
+
+private:
 	std::unique_ptr<Ui::MainWindow> m_ui;
 };

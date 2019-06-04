@@ -4,6 +4,6 @@ AddTarget(EXECUTABLE
 	SRC *.cpp *.h
 	QT_USE Core Widgets
 	UI_FILES *.ui
-	SUBDIRS
 	DEPS
+	XmlTools
 	)
