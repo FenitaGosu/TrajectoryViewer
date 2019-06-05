@@ -22,5 +22,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 include(addTaget.cmake)
 
+include(FileWatcher/FileWatcher.cmake)
 include(XmlTools/XmlTools.cmake)
+include(Logic/Logic.cmake)
 include(TrajectoryViewer/TrajectoryViewer.cmake)

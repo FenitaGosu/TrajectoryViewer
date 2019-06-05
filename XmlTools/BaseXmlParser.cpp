@@ -7,17 +7,11 @@ using namespace XmlTools;
 
 struct BaseXmlParser::Impl
 {
-	Impl(const std::string & fileName)
-		: fileName(fileName)
-	{
-	}
-
-	const std::string fileName;
 	std::map<std::string, ElementParseFunction> elementsParsers;
 };
 
-BaseXmlParser::BaseXmlParser(const std::string& fileName)
-	: m_impl(std::make_unique<Impl>(fileName))
+BaseXmlParser::BaseXmlParser()
+	: m_impl(std::make_unique<Impl>())
 {
 }
 

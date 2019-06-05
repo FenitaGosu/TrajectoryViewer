@@ -1,3 +1,5 @@
+#include <QFileDialog>
+
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
@@ -17,4 +19,8 @@ MainWindow::~MainWindow() = default;
 
 void MainWindow::OnOpenXmlFile()
 {
+	const auto filePath = QFileDialog::getOpenFileName(this, tr("Select xml file"), QString(), tr("XML files (*.xml)"));
+
+	if (filePath.isEmpty())
+		return;
 }

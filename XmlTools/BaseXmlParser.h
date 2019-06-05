@@ -10,7 +10,7 @@ namespace XmlTools
 	class BaseXmlParser
 	{
 	public:
-		BaseXmlParser(const std::string& fileName);
+		BaseXmlParser();
 		virtual ~BaseXmlParser();
 
 		virtual bool Parse() = 0;
