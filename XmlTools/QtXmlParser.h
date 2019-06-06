@@ -12,6 +12,7 @@ namespace XmlTools
 		QtXmlParser(const std::string& fileName);
 		~QtXmlParser();
 
+	protected:
 		bool Parse() override final;
 
 	private:

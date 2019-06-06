@@ -3,7 +3,8 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include "XmlTools/BaseXmlParser.h"
+#include "Logic/Interfaces/IDataXmlParser.h"
+#include "Logic/DataXmlParser/DataXmlParser.h"
 
 MainWindow::MainWindow(QWidget *parent) 
 	: QMainWindow(parent)
@@ -23,4 +24,6 @@ void MainWindow::OnOpenXmlFile()
 
 	if (filePath.isEmpty())
 		return;
+
+	std::unique_ptr<Logic::IDataXmlParser> xmlParser = std::make_unique<Logic::DataXmlParser>(filePath.toStdString());
 }

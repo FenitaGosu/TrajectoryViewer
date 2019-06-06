@@ -6,4 +6,6 @@ AddTarget(
 	SUBDIRS
 	Data
 	DataXmlParser
+	DEPS
+	XmlTools
 	)
