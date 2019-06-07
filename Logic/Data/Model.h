@@ -13,11 +13,13 @@ namespace Logic
 				int hResolution, int vResolution, 
 				double depth,
 				double angle1X, double angle2Z, double angle3X,
-				std::vector<double>&& distributionXZ
+				std::vector<std::vector<double>>&& distributionXZ
 			);
-
+		Model();
 		~Model();
 		
+		Model& operator=(Model&& rhs) noexcept;
+
 		double GetHSize() const noexcept;
 		double GetVSize() const noexcept;
 
@@ -33,7 +35,7 @@ namespace Logic
 		double GetAgle2Z() const noexcept;
 		double GetAgle3X() const noexcept;
 
-		const std::vector<double>& GetDistributionXZ() const noexcept;
+		const std::vector<std::vector<double>>& GetDistributionXZ() const noexcept;
 
 	private:
 		struct Impl;

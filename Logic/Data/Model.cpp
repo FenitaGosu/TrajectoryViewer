@@ -19,12 +19,21 @@ struct Model::Impl
 	double angle2Z = 0.0;
 	double angle3X = 0.0;
 
-	std::vector<double> distributionXZ;
+	std::vector<std::vector<double>> distributionXZ;
 };
 
-Model::Model(double hSize, double vSize, double hOffset, double vOffset, int hResolution, int vResolution, double depth, double angle1X, double angle2Z, double angle3X, std::vector<double>&& distributionXZ)
+Model::Model(double hSize, double vSize, double hOffset, double vOffset, int hResolution, int vResolution, double depth, double angle1X, double angle2Z, double angle3X, std::vector<std::vector<double>>&& distributionXZ)
 	: m_impl(std::make_unique<Impl>())
 {
+}
+
+Model::Model() = default;
+
+Model& Model::operator=(Model&& rhs) noexcept
+{
+	m_impl = std::move(rhs.m_impl);
+
+	return *this;
 }
 
 Model::~Model() = default;
@@ -79,7 +88,7 @@ double Model::GetAgle3X() const noexcept
 	return m_impl->angle3X;
 }
 
-const std::vector<double>& Model::GetDistributionXZ() const noexcept
+const std::vector<std::vector<double>>& Model::GetDistributionXZ() const noexcept
 {
 	return m_impl->distributionXZ;
 }
