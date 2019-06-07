@@ -5,6 +5,10 @@
 
 using namespace XmlTools;
 
+namespace {
+	const std::string ROOT_NAME = "Root";
+}
+
 struct QtXmlParser::Impl
 {
 	Impl(const std::string& fileName)
@@ -44,20 +48,18 @@ bool QtXmlParser::Parse()
 		if (!elementParseFunction)
 			continue;
 
-		std::vector<std::pair<std::string, std::string>> attributes;
+		std::map<std::string, std::string> attributes;
 
 		{
-			const auto atrList = xmlReader.attributes();
+			const auto atrList = xmlReader.attributes();			
 
-			attributes.reserve(atrList.size());
-
-			std::transform(atrList.cbegin(), atrList.cend(), std::back_inserter(attributes), [](const auto& atr)
+			std::transform(atrList.cbegin(), atrList.cend(), std::inserter(attributes, attributes.begin()), [](const auto& atr)
 			{
 				return std::make_pair(atr.name().toString().toStdString(), atr.value().toString().toStdString());
 			});
 		}
 					
-		if (xmlReader.name() == "Root") //@todo
+		if (xmlReader.name().toString().toStdString() == ROOT_NAME)
 			continue;
 
 		std::string elementText;

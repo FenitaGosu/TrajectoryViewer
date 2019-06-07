@@ -8,6 +8,8 @@ namespace Logic
 	class IDataXmlParser
 	{
 	public:
+		virtual ~IDataXmlParser() = default;
+
 		virtual bool ParseData(Trajectory& trajectory, Model& model) = 0;
 	};
 }

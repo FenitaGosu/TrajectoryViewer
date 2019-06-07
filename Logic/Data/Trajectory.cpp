@@ -6,18 +6,6 @@ using namespace Logic;
 
 struct Trajectory::Impl
 {
-	struct Data
-	{
-		int depth;
-
-		double inclination;
-		double azimuth;
-
-		double x;
-		double y;
-		double z;
-	};
-
 	std::vector<Data> data;
 };
 
@@ -61,4 +49,14 @@ double Trajectory::GetY(size_t index) const
 double Trajectory::GetZ(size_t index) const
 {
 	return m_impl->data[index].z;
+}
+
+void Trajectory::AddNewData(Data&& data)
+{
+	m_impl->data.push_back(data);
+}
+
+void Trajectory::Reserve(size_t count)
+{
+	m_impl->data.reserve(count);
 }

@@ -15,7 +15,7 @@ BaseXmlParser::BaseXmlParser()
 {
 }
 
-XmlTools::BaseXmlParser::~BaseXmlParser() = default;
+BaseXmlParser::~BaseXmlParser() = default;
 
 void BaseXmlParser::AddElementParseFunction(const std::string& name, ElementParseFunction func)
 {
@@ -27,4 +27,9 @@ BaseXmlParser::ElementParseFunction BaseXmlParser::GetElementParseFunction(const
 {
 	const auto it = m_impl->elementsParsers.find(name);	
 	return it == m_impl->elementsParsers.cend() ? ElementParseFunction() : it->second;
+}
+
+void BaseXmlParser::ClearElementParseFunctions()
+{
+	m_impl->elementsParsers.clear();
 }
