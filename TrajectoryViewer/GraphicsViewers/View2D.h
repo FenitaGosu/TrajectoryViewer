@@ -4,18 +4,21 @@
 
 #include <QWidget>
 
-namespace Ui {
-class View2D;
-}
+#include "Interfaces/I2DView.h"
 
-class View2D : public QWidget
+namespace TrajectoryViewer {
+
+class View2D
+	: public QWidget
+	, public I2DView
 {
 	Q_OBJECT
 
 public:
-	explicit View2D(QWidget *parent = nullptr);
+	explicit View2D(QWidget* parent = nullptr);
 	~View2D();
 
-private:
-	std::unique_ptr<Ui::View2D> m_ui;
+	void Clear() override;
 };
+
+}

@@ -25,7 +25,7 @@ void BaseXmlParser::AddElementParseFunction(const std::string& name, ElementPars
 
 BaseXmlParser::ElementParseFunction BaseXmlParser::GetElementParseFunction(const std::string& name) const
 {
-	const auto it = m_impl->elementsParsers.find(name);	
+	const auto it = m_impl->elementsParsers.find(name);
 	return it == m_impl->elementsParsers.cend() ? ElementParseFunction() : it->second;
 }
 

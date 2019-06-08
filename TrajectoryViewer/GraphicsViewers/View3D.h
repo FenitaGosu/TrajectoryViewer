@@ -4,18 +4,28 @@
 
 #include <QWidget>
 
-namespace Ui {
-class View3D;
-}
+#include "QPlot3D/QPlot3D.h"
 
-class View3D : public QWidget
+#include "Interfaces/I3DView.h"
+
+namespace TrajectoryViewer {
+
+class View3D
+	: public QPlot3D
+	, public I3DView
 {
 	Q_OBJECT
 
 public:
-	explicit View3D(QWidget *parent = nullptr);
+	explicit View3D(QWidget* parent = nullptr);
 	~View3D();
+	
+	void Clear() override;
+	void AddLine(const std::string& name, std::vector<Point3D>&& points) override;
 
 private:
-	std::unique_ptr<Ui::View3D> m_ui;
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
 };
+
+}

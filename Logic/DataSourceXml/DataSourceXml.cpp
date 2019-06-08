@@ -17,8 +17,8 @@ struct DataSourceXml::Impl
 	{
 	}
 
-	Model model;
-	Trajectory trajectory;
+	std::unique_ptr<Model> model;
+	std::unique_ptr<Trajectory> trajectory;
 
 	std::unique_ptr<IDataXmlParser> xmlParser;
 };
@@ -32,16 +32,21 @@ DataSourceXml::~DataSourceXml() = default;
 
 void DataSourceXml::Refresh()
 {
-	[[maybe_unused]] bool isSuccess = m_impl->xmlParser->ParseData(m_impl->trajectory, m_impl->model);
+	m_impl->trajectory	= std::make_unique<Trajectory>();
+	m_impl->model		= std::make_unique<Model>();
+
+	[[maybe_unused]] bool isSuccess = m_impl->xmlParser->ParseData(*m_impl->trajectory, *m_impl->model);
 	assert(isSuccess);
 }
 
 const Model& DataSourceXml::GetModel() const
 {
-	return m_impl->model;
+	assert(m_impl->model);
+	return *m_impl->model;
 }
 
 const Trajectory& DataSourceXml::GetTrajectory() const
 {
-	return m_impl->trajectory;
+	assert(m_impl->trajectory);
+	return *m_impl->trajectory;
 }

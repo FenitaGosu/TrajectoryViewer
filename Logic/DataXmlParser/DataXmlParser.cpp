@@ -42,6 +42,8 @@ DataXmlParser::DataXmlParser(const std::string& fileName)
 
 bool DataXmlParser::ParseData(Trajectory& trajectory, Model& model)
 {
+	ClearElementParseFunctions();
+
 	const auto parseTrajectory = [&trajectory, &model](const std::map<std::string, std::string>& atributes, const std::string& data)
 	{
 		const auto it = atributes.find(TRAJECTORY_SIZE_ATR);

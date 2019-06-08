@@ -6,6 +6,8 @@
 
 #include "MainWindow.h"
 
+using namespace TrajectoryViewer;
+
 int main(int argc, char *argv[])
 {
 	try

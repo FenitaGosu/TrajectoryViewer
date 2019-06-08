@@ -16,11 +16,13 @@
 
 #include "Controller/Controller.h"
 
+using namespace TrajectoryViewer;
+
 MainWindow::MainWindow(QWidget *parent) 
 	: QMainWindow(parent)
 	, m_ui(std::make_unique<Ui::MainWindow>())
 {
-	m_ui->setupUi(this);	
+	m_ui->setupUi(this);
 
 	connect(m_ui->action_Exit		, &QAction::triggered, this, &QMainWindow::close);
 	connect(m_ui->actionOpen_XML	, &QAction::triggered, this, &MainWindow::OnOpenXmlFile);
@@ -38,7 +40,7 @@ void MainWindow::OnOpenXmlFile()
 	std::unique_ptr<Logic::IDataXmlParser> xmlParser	= std::make_unique<Logic::DataXmlParser>(filePath.toStdString());
 	std::unique_ptr<Logic::IDataSource> dataSource		= std::make_unique<Logic::DataSourceXml>(std::move(xmlParser));
 	
-	m_controller	= std::make_unique<Controller>(std::move(dataSource));
+	m_controller	= std::make_unique<Controller>(std::move(dataSource), m_ui->view3D, m_ui->viewt2D);
 	m_fileWatcher	= std::make_unique<FileWatcher::QtFileWatcher>();
 
 	m_fileWatcher->AddFile(filePath.toStdString(), std::bind(&Controller::Draw, std::cref(m_controller)));
