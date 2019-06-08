@@ -78,6 +78,7 @@ private:
 	QVector<double> getTicks(double min, double max) const;
 	void setVisibleTicks(bool lower, bool right, bool upper, bool left);
 	void drawXTickLabel(QVector3D start, QVector3D stop, const QString& string) const;
+	bool isEmpty() const;
 
 private:
 	QPlot3D* mPlot;

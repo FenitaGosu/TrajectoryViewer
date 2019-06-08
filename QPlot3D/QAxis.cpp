@@ -48,8 +48,8 @@ QAxis::QAxis() :
 {
 }
 
-void QAxis::setRange(const QRange& range) {
-
+void QAxis::setRange(const QRange& range)
+{
 	mRange = range;
 
 	if (mAxis == X_AXIS)
@@ -77,43 +77,83 @@ void QAxis::setRange(const QRange& range) {
 	mTranslate = mZTicks[0];
 }
 
-void QAxis::setAxis(const Axis& axis) { mAxis = axis; }
-void QAxis::setAdjustPlaneView(bool value) { mAdjustPlaneView = value; }
-void QAxis::setShowPlane(bool value) { mShowPlane = value; }
-void QAxis::setShowGrid(bool value) { mShowGrid = value; }
-void QAxis::setShowAxis(bool value) { mShowAxis = value; }
-void QAxis::setShowLabel(bool value) { mShowLabel = value; }
-void QAxis::setShowAxisBox(bool value) { mShowAxisBox = value; }
-void QAxis::setPlaneColor(const QColor& color) { mPlaneColor = color; }
-void QAxis::setGridColor(const QColor& color) { mGridColor = color; }
-void QAxis::setLabelColor(const QColor& color) { mLabelColor = color; }
-void QAxis::setLabelFont(const QFont& font) { mLabelFont = font; }
-void QAxis::setTicksFont(const QFont& font) { mTicksFont = font; }
+void QAxis::setAxis(const Axis& axis)
+{
+	mAxis = axis;
+}
+void QAxis::setAdjustPlaneView(bool value)
+{
+	mAdjustPlaneView = value;
+}
+void QAxis::setShowPlane(bool value)
+{
+	mShowPlane = value;
+}
+void QAxis::setShowGrid(bool value)
+{
+	mShowGrid = value;
+}
+void QAxis::setShowAxis(bool value)
+{
+	mShowAxis = value;
+}
+void QAxis::setShowLabel(bool value)
+{
+	mShowLabel = value;
+}
+void QAxis::setShowAxisBox(bool value)
+{
+	mShowAxisBox = value;
+}
+void QAxis::setPlaneColor(const QColor& color)
+{
+	mPlaneColor = color;
+}
+void QAxis::setGridColor(const QColor& color)
+{
+	mGridColor = color;
+}
+void QAxis::setLabelColor(const QColor& color)
+{
+	mLabelColor = color;
+}
+void QAxis::setLabelFont(const QFont& font)
+{
+	mLabelFont = font;
+}
+void QAxis::setTicksFont(const QFont& font)
+{
+	mTicksFont = font;
+}
 
-QVector<double> QAxis::getTicks(double minValue, double maxValue)  const {
+QVector<double> QAxis::getTicks(double minValue, double maxValue)  const
+{
 	QVector<double> tTicks;
 	double step = (maxValue - minValue) / mScale;
 	double factor = pow(10.0, floor((log(step) / log(10.0))));
 
 	double tmp = step / factor;
-	if (tmp < mScale) {
+	if (tmp < mScale)
+	{
 		step = (int)(tmp * 2) / 2.0 * factor;
 	}
-	else {
+	else
+	{
 		step = (int)(tmp * 0.5) / 2.0 * factor;
 	}
 	int firstStep = floor(minValue / step);
 	int lastStep = ceil(maxValue / step);
 	int tickCount = lastStep - firstStep + 1;
 
-	for (int i = 0; i < tickCount; i++) {
+	for (int i = 0; i < tickCount; i++)
+	{
 		tTicks.push_back((firstStep + i) * step);
 	}
 	return tTicks;
 }
 
-void QAxis::drawXTickLabel(QVector3D start, QVector3D stop, const QString& string) const {
-
+void QAxis::drawXTickLabel(QVector3D start, QVector3D stop, const QString& string) const
+{
 	QRect textSize = mPlot->textSize(string);
 
 	const QVector3D tmpStart = mPlot->toScreenCoordinates(start.x(), start.y(), 0.0);
@@ -124,7 +164,8 @@ void QAxis::drawXTickLabel(QVector3D start, QVector3D stop, const QString& strin
 
 	QVector2D r = tStop - tStart;
 	QVector2D v = tStop;
-	if (r.x() < 0) {
+	if (r.x() < 0)
+	{
 		v - QVector2D(textSize.width(), 0.0);
 		v += QVector2D(-textSize.width(), 0.5 * textSize.height());
 	}
@@ -137,7 +178,15 @@ void QAxis::drawXTickLabel(QVector3D start, QVector3D stop, const QString& strin
 	mPlot->renderTextAtScreenCoordinates(v.x(), v.y(), string, mTicksFont);
 }
 
-void QAxis::drawAxisPlane() const {
+bool QAxis::isEmpty() const
+{
+	return mXTicks.isEmpty() || mYTicks.isEmpty() || mZTicks.isEmpty();
+}
+
+void QAxis::drawAxisPlane() const
+{
+	if (isEmpty())
+		return;
 
 	double minX = mXTicks[0];
 	double maxX = mXTicks[mXTicks.size() - 1];
@@ -149,7 +198,8 @@ void QAxis::drawAxisPlane() const {
 	glPolygonOffset(1.0f, 1.0f);
 
 	// Plane
-	if (mShowPlane) {
+	if (mShowPlane)
+	{
 		Draw3DPlane(QVector3D(minX, minY, 0), QVector3D(maxX, maxY, 0), mPlaneColor);
 	}
 
@@ -157,56 +207,72 @@ void QAxis::drawAxisPlane() const {
 	double deltaY = mYTicks[1] - mYTicks[0];
 
 	// Grid
-	for (int i = 0; i < mXTicks.size(); i++) {
-		if (mShowGrid) {
+	for (int i = 0; i < mXTicks.size(); i++)
+	{
+		if (mShowGrid)
+		{
 			mPlot->draw3DLine(QVector3D(mXTicks[i], minY, 0), QVector3D(mXTicks[i], maxY, 0), 2, mGridColor);
 		}
-		if (mShowAxis && mShowLowerTicks) {
+		if (mShowAxis && mShowLowerTicks)
+		{
 			mPlot->draw3DLine(QVector3D(mXTicks[i], minY, 0), QVector3D(mXTicks[i], minY - 0.2 * deltaY, 0), 2, mLabelColor);
 			drawXTickLabel(QVector3D(mXTicks[i], minY, 0), QVector3D(mXTicks[i], minY - 0.5 * deltaY, 0), QString("%1").arg(mXTicks[i], 3, 'f', 1));
 		}
-		if (mShowAxis && mShowUpperTicks) {
+		if (mShowAxis && mShowUpperTicks)
+		{
 			mPlot->draw3DLine(QVector3D(mXTicks[i], maxY, 0), QVector3D(mXTicks[i], maxY + 0.2 * deltaY, 0), 2, mLabelColor);
 			drawXTickLabel(QVector3D(mXTicks[i], maxY, 0), QVector3D(mXTicks[i], maxY + 0.5 * deltaY, 0), QString("%1").arg(mXTicks[i], 3, 'f', 1));
 		}
 	}
 
-	for (int i = 1; i < mYTicks.size(); i++) {
-		if (mShowGrid) {
+	for (int i = 1; i < mYTicks.size(); i++)
+		{
+		if (mShowGrid)
+		{
 			mPlot->draw3DLine(QVector3D(minX, mYTicks[i], 0), QVector3D(maxX, mYTicks[i], 0), 2, mGridColor);
 		}
-		if (mShowAxis && mShowLeftTicks) {
+		if (mShowAxis && mShowLeftTicks)
+		{
 			mPlot->draw3DLine(QVector3D(minX, mYTicks[i], 0), QVector3D(minX - 0.2 * deltaX, mYTicks[i], 0), 2, mLabelColor);
 			drawXTickLabel(QVector3D(minX, mYTicks[i], 0), QVector3D(minX - 0.5 * deltaX, mYTicks[i], 0), QString("%1").arg(mYTicks[i], 3, 'f', 1));
 		}
-		if (mShowAxis && mShowRightTicks) {
+		if (mShowAxis && mShowRightTicks)
+		{
 			mPlot->draw3DLine(QVector3D(maxX, mYTicks[i], 0), QVector3D(maxX + 0.2 * deltaX, mYTicks[i], 0), 2, mLabelColor);
 			drawXTickLabel(QVector3D(maxX, mYTicks[i], 0.0), QVector3D(maxX + 0.5 * deltaX, mYTicks[i], 0), QString("%1").arg(mYTicks[i], 3, 'f', 1));
 		}
 	}
 
-	if (mShowAxis && mShowLowerTicks) {
+	if (mShowAxis && mShowLowerTicks)
+{
 		mPlot->draw3DLine(QVector3D(minX, minY, 0), QVector3D(maxX + 0.5 * deltaX, minY, 0), 3, mLabelColor);
 	}
-	if (mShowLabel && mShowLowerTicks) {
+	if (mShowLabel && mShowLowerTicks)
+	{
 		mPlot->renderTextAtWorldCoordinates(QVector3D(0.5 * (maxX + minX), minY - 1.5 * deltaY, 0), mXLabel, mLabelFont);
 	}
-	if (mShowAxis && mShowUpperTicks) {
+	if (mShowAxis && mShowUpperTicks)
+	{
 		mPlot->draw3DLine(QVector3D(minX, maxY, 0), QVector3D(maxX + 0.5 * deltaX, maxY, 0), 3, mLabelColor);
 	}
-	if (mShowLabel && mShowUpperTicks) {
+	if (mShowLabel && mShowUpperTicks)
+	{
 		mPlot->renderTextAtWorldCoordinates(QVector3D(0.5 * (maxX + minX), maxY + 1.5 * deltaY, 0), mXLabel, mLabelFont);
 	}
-	if (mShowAxis && mShowLeftTicks) {
+	if (mShowAxis && mShowLeftTicks)
+	{
 		mPlot->draw3DLine(QVector3D(minX, minY, 0), QVector3D(minX, maxY + 0.5 * deltaY, 0), 3, mLabelColor);
 	}
-	if (mShowLabel && mShowLeftTicks) {
+	if (mShowLabel && mShowLeftTicks)
+	{
 		mPlot->renderTextAtWorldCoordinates(QVector3D(minX - 1.5 * deltaX, 0.5 * (maxY + minY), 0), mYLabel, mLabelFont);
 	}
-	if (mShowAxis && mShowRightTicks) {
+	if (mShowAxis && mShowRightTicks)
+	{
 		mPlot->draw3DLine(QVector3D(maxX, minY, 0), QVector3D(maxX, maxY + 0.5 * deltaY, 0), 3, mLabelColor);
 	}
-	if (mShowLabel && mShowRightTicks) {
+	if (mShowLabel && mShowRightTicks)
+	{
 		mPlot->renderTextAtWorldCoordinates(QVector3D(maxX + 1.5 * deltaX, 0.5 * (maxY + minY), 0), mYLabel, mLabelFont);
 	}
 
@@ -215,22 +281,24 @@ void QAxis::drawAxisPlane() const {
 
 }
 
-void QAxis::draw() const {
-	if (mXTicks.isEmpty()) return;
-	if (mYTicks.isEmpty()) return;
-	if (mZTicks.isEmpty()) return;
+void QAxis::draw() const
+{
+	if (isEmpty())
+		return;
 
 	glPushMatrix();
 
 	if (mAxis == X_AXIS)
 	{
+		// do nothing
 	}
 	else if (mAxis == Y_AXIS)
 	{
 		glRotatef(90, 1, 0, 0);
 		glRotatef(90, 0, 1, 0);
 	}
-	else {
+	else
+{
 		glRotatef(90, 1, 0, 0);
 		glRotatef(180, 0, 1, 0);
 		glRotatef(90, 0, 0, 1);
@@ -241,24 +309,27 @@ void QAxis::draw() const {
 
 	glPopMatrix();
 }
-void QAxis::drawAxisBox() const {
-	if (mXTicks.isEmpty()) return;
-	if (mYTicks.isEmpty()) return;
-	if (mZTicks.isEmpty()) return;
+void QAxis::drawAxisBox() const
+{
+	if (isEmpty())
+		return;
 
 	glPushMatrix();
 
 
-	if (mShowAxisBox) {
+	if (mShowAxisBox)
+	{
 		if (mAxis == X_AXIS)
 		{
+			// do nothing
 		}
 		else if (mAxis == Y_AXIS)
 		{
 			glRotatef(90, 1, 0, 0);
 			glRotatef(90, 0, 1, 0);
 		}
-		else {
+		else
+		{
 			glRotatef(90, 1, 0, 0);
 			glRotatef(180, 0, 1, 0);
 			glRotatef(90, 0, 0, 1);
@@ -278,15 +349,17 @@ void QAxis::drawAxisBox() const {
 	glPopMatrix();
 }
 
-void QAxis::setVisibleTicks(bool lower, bool right, bool upper, bool left) {
+void QAxis::setVisibleTicks(bool lower, bool right, bool upper, bool left)
+{
 	mShowLeftTicks = left;
 	mShowRightTicks = right;
 	mShowLowerTicks = lower;
 	mShowUpperTicks = upper;
 }
 
-void QAxis::adjustPlaneView() {
-	if (!mAdjustPlaneView) return;
+void QAxis::adjustPlaneView()
+{
+	if (!mAdjustPlaneView || mZTicks.isEmpty()) return;
 
 	bool tFlipX = false;
 	bool tFlipY = false;
@@ -317,8 +390,8 @@ void QAxis::adjustPlaneView() {
 
 	// Default ticks
 
-	if (0.0 <= mPlot->elevation() && 90.0 > mPlot->elevation()) {
-
+	if (0.0 <= mPlot->elevation() && 90.0 > mPlot->elevation())
+	{
 		if (0.0 <= mPlot->azimuth() && 90.0 > mPlot->azimuth())
 		{
 			if (mAxis == X_AXIS) setVisibleTicks(true, true, false, false);
@@ -346,9 +419,9 @@ void QAxis::adjustPlaneView() {
 			if (mAxis == Y_AXIS) setVisibleTicks(false, false, false, true);
 			if (mAxis == Z_AXIS) setVisibleTicks(false, false, false, false);
 		}
-
 	}
-	else {
+	else
+	{
 		if (0.0 <= mPlot->azimuth() && 90.0 > mPlot->azimuth())
 		{
 			if (mAxis == X_AXIS) setVisibleTicks(false, false, false, false);
@@ -379,9 +452,27 @@ void QAxis::adjustPlaneView() {
 	}
 }
 
-void QAxis::togglePlane() { mShowPlane = !mShowPlane; }
-void QAxis::toggleGrid() { mShowGrid = !mShowGrid; }
-void QAxis::toggleAxis() { mShowAxis = !mShowAxis; }
-void QAxis::toggleLabel() { mShowLabel = !mShowLabel; }
-void QAxis::toggleAxisBox() { mShowAxisBox = !mShowAxisBox; }
-void QAxis::toggleAdjustView() { mAdjustPlaneView = !mAdjustPlaneView; }
+void QAxis::togglePlane()
+{
+	mShowPlane = !mShowPlane;
+}
+void QAxis::toggleGrid()
+{
+	mShowGrid = !mShowGrid;
+}
+void QAxis::toggleAxis()
+{
+	mShowAxis = !mShowAxis;
+}
+void QAxis::toggleLabel()
+{
+	mShowLabel = !mShowLabel;
+}
+void QAxis::toggleAxisBox()
+{
+	mShowAxisBox = !mShowAxisBox;
+}
+void QAxis::toggleAdjustView()
+{
+	mAdjustPlaneView = !mAdjustPlaneView;
+}
