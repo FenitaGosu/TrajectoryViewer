@@ -1,18 +1,19 @@
 #pragma once
 
-namespace Logic 
+namespace Logic {
+
+class Model;
+class Trajectory;
+
+class IDataSource
 {
-	class Model;
-	class Trajectory;
+public:
+	virtual ~IDataSource() = default;
 
-	class IDataSource
-	{
-	public:
-		virtual ~IDataSource() = default;
+	virtual void Refresh() = 0;
 
-		virtual void Refresh() = 0;
+	virtual const Model& GetModel() const = 0;
+	virtual const Trajectory& GetTrajectory() const = 0;
+};
 
-		virtual const Model& GetModel() const = 0;
-		virtual const Trajectory& GetTrajectory() const = 0;
-	};
 }

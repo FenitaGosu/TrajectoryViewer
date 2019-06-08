@@ -3,42 +3,43 @@
 #include <memory>
 #include <vector>
 
-namespace Logic
+namespace Logic {
+
+class Model
 {
-	class Model
-	{
-	public:
-		Model(	double hSize, double vSize,
-				double hOffset, double vOffset, 
-				int hResolution, int vResolution, 
-				double depth,
-				double angle1X, double angle2Z, double angle3X,
-				std::vector<std::vector<double>>&& distributionXZ
-			);
-		Model();
-		~Model();
-		
-		Model& operator=(Model&& rhs) noexcept;
+public:
+	Model(	double hSize, double vSize,
+			double hOffset, double vOffset, 
+			int hResolution, int vResolution, 
+			double depth,
+			double angle1X, double angle2Z, double angle3X,
+			std::vector<std::vector<double>>&& distributionXZ
+		);
+	Model();
+	~Model();
 
-		double GetHSize() const noexcept;
-		double GetVSize() const noexcept;
+	Model& operator=(Model&& rhs) noexcept;
 
-		double GetHOffset() const noexcept;
-		double GetVOffset() const noexcept;
+	double GetHSize() const noexcept;
+	double GetVSize() const noexcept;
 
-		int GetHResolution() const noexcept;
-		int GetVResolution() const noexcept;
+	double GetHOffset() const noexcept;
+	double GetVOffset() const noexcept;
 
-		double GetDepth() const noexcept;
+	int GetHResolution() const noexcept;
+	int GetVResolution() const noexcept;
 
-		double GetAgle1X() const noexcept;
-		double GetAgle2Z() const noexcept;
-		double GetAgle3X() const noexcept;
+	double GetDepth() const noexcept;
 
-		const std::vector<std::vector<double>>& GetDistributionXZ() const noexcept;
+	double GetAgle1X() const noexcept;
+	double GetAgle2Z() const noexcept;
+	double GetAgle3X() const noexcept;
 
-	private:
-		struct Impl;
-		std::unique_ptr<Impl> m_impl;
-	};
+	const std::vector<std::vector<double>>& GetDistributionXZ() const noexcept;
+
+private:
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
+};
+
 }

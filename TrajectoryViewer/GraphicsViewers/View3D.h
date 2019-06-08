@@ -19,4 +19,3 @@ public:
 private:
 	std::unique_ptr<Ui::View3D> m_ui;
 };
-

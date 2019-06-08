@@ -8,6 +8,12 @@ namespace Ui {
 class MainWindow;
 }
 
+namespace FileWatcher {
+class IFileWatcher;
+}
+
+class Controller;
+
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -21,4 +27,7 @@ private:
 
 private:
 	std::unique_ptr<Ui::MainWindow> m_ui;
+
+	std::unique_ptr<Controller> m_controller;
+	std::unique_ptr<FileWatcher::IFileWatcher> m_fileWatcher;
 };

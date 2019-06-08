@@ -1,15 +1,16 @@
 #pragma once
 
-namespace Logic 
+namespace Logic {
+
+class Trajectory;
+class Model;
+
+class IDataXmlParser
 {
-	class Trajectory;
-	class Model;
+public:
+	virtual ~IDataXmlParser() = default;
 
-	class IDataXmlParser
-	{
-	public:
-		virtual ~IDataXmlParser() = default;
+	virtual bool ParseData(Trajectory& trajectory, Model& model) = 0;
+};
 
-		virtual bool ParseData(Trajectory& trajectory, Model& model) = 0;
-	};
 }

@@ -40,7 +40,7 @@ bool QtXmlParser::Parse()
 		xmlReader.readNext();
 
 		if (!xmlReader.isStartElement())
-			continue;		
+			continue;
 		
 		const auto name = xmlReader.name().toString().toStdString();
 		const auto elementParseFunction = GetElementParseFunction(name);
@@ -51,7 +51,7 @@ bool QtXmlParser::Parse()
 		std::map<std::string, std::string> attributes;
 
 		{
-			const auto atrList = xmlReader.attributes();			
+			const auto atrList = xmlReader.attributes();
 
 			std::transform(atrList.cbegin(), atrList.cend(), std::inserter(attributes, attributes.begin()), [](const auto& atr)
 			{
@@ -72,7 +72,7 @@ bool QtXmlParser::Parse()
 		}			
 	}
 
-	if (xmlReader.hasError()) 
+	if (xmlReader.hasError())
 		return false;
 
 	return true;
