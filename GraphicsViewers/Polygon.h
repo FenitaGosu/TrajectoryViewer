@@ -2,11 +2,15 @@
 
 #include "Geometry/PointMD.h"
 
+#include "Color.h"
+
 namespace GraphicsViewers {
 
 struct Polygon
 {
-	int r = 0, g = 0, b = 0;
+	Color pen;
+	Color brush;
+
 	std::vector<Geometry::PointMD> vertex;
 };
 

@@ -4,6 +4,21 @@ using namespace Logic;
 
 struct Model::Impl
 {
+	Impl(double hSize, double vSize, double hOffset, double vOffset, int hResolution, int vResolution, double depth, double angle1X, double angle2Z, double angle3X, std::vector<std::vector<double>>&& distributionXZ)
+		: hSize(hSize)
+		, vSize(vSize)
+		, hOffset(hOffset)
+		, vOffset(vOffset)
+		, hResolution(hResolution)
+		, vResolution(vResolution)
+		, depth(depth)
+		, angle1X(angle1X)
+		, angle2Z(angle2Z)
+		, angle3X(angle3X)
+		, distributionXZ(std::move(distributionXZ))
+	{
+	}
+
 	double hSize = 0.0;
 	double vSize = 0.0;
 
@@ -23,7 +38,7 @@ struct Model::Impl
 };
 
 Model::Model(double hSize, double vSize, double hOffset, double vOffset, int hResolution, int vResolution, double depth, double angle1X, double angle2Z, double angle3X, std::vector<std::vector<double>>&& distributionXZ)
-	: m_impl(std::make_unique<Impl>())
+	: m_impl(std::make_unique<Impl>(hSize, vSize, hOffset, vOffset, hResolution, vResolution, depth, angle1X, angle2Z, angle3X, std::move(distributionXZ)))
 {
 }
 

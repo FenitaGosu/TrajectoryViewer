@@ -29,12 +29,15 @@ void View3D::Clear()
 
 void View3D::AddCurve(const std::string& name, Curve&& curve)
 {
+	if (curve.points.empty())
+		return;
+
 	m_impl->curves.emplace_back(QString::fromStdString(name));
 
 	for (const auto& p : curve.points)
 		m_impl->curves.back().addData(p.X(), p.Y(), p.Z());
 
-	m_impl->curves.back().setColor(QColor(curve.r, curve.g, curve.b));
+	m_impl->curves.back().setColor(QColor(curve.pen.r, curve.pen.g, curve.pen.b));
 	m_impl->curves.back().setLineWidth(2);
 
 	addCurve(&m_impl->curves.back());

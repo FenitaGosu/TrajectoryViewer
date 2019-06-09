@@ -9,6 +9,11 @@ PointMD::PointMD(double x, double y, double z)
 {
 }
 
+PointMD::PointMD(double x, double y)
+	: m_coordinates({ x, y })
+{
+}
+
 PointMD::PointMD(const std::vector<double>& coordinates)
 	: m_coordinates(coordinates)
 {

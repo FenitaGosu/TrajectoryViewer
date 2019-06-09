@@ -19,6 +19,7 @@ class PointMD
 {
 public:
 	PointMD(double x, double y, double z);
+	PointMD(double x, double y);
 	PointMD(const std::vector<double>& coordinates = std::vector<double>());
 	PointMD(std::vector<double>&& coordinates);
 	PointMD(std::initializer_list<double>&& coordinates);

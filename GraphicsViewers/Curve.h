@@ -2,11 +2,13 @@
 
 #include "Geometry/PointMD.h"
 
+#include "Color.h"
+
 namespace GraphicsViewers {
 
 struct Curve
 {
-	int r = 0, g = 0, b = 0;
+	Color pen;
 	std::vector<Geometry::PointMD> points;
 };
 

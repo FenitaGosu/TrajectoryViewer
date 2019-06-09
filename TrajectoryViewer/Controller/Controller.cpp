@@ -9,12 +9,74 @@
 
 #include "GraphicsViewers/Curve.h"
 #include "GraphicsViewers/Polygon.h"
+#include "GraphicsViewers/ColorGradientGenertor.h"
 
 #include "Interfaces/IDataSource.h"
 
 #include "Controller.h"
 
 using namespace TrajectoryViewer;
+
+namespace
+{
+	GraphicsViewers::Curve TrajectoryToCurve(const Logic::Trajectory& trajectory)
+	{
+		GraphicsViewers::Curve curve;
+
+		curve.points.reserve(trajectory.Size());
+
+		for (size_t i = 0, sz = trajectory.Size(); i < sz; ++i)
+			curve.points.emplace_back(trajectory.GetX(i), trajectory.GetY(i), trajectory.GetZ(i));
+
+		curve.pen = GraphicsViewers::Color(0, 123, 167);
+
+		return curve;
+	}
+
+	std::vector<GraphicsViewers::Polygon> ModelToPolygons(const Logic::Model& model)
+	{
+		std::vector<GraphicsViewers::Polygon> polygons;
+
+		double hStep = model.GetHSize() / model.GetHResolution();
+		double vStep = model.GetVSize() / model.GetVResolution();
+
+		std::vector<double> horizontal;
+		std::vector<double> vertical;
+
+		horizontal.reserve(static_cast<size_t>(model.GetHResolution() + 1));
+		vertical.reserve(static_cast<size_t>(model.GetVResolution() + 1));
+
+		double hStart = model.GetHOffset();
+		for (int i = 0, sz = model.GetHResolution() + 1; i < sz; ++i)
+			horizontal.push_back(hStart + hStep * i);
+
+		double vStart = model.GetVOffset();
+		for (int i = 0, sz = model.GetVResolution() + 1; i < sz; ++i)
+			vertical.push_back(vStart + vStep * i);
+
+		const auto colors = GraphicsViewers::ColorGradientGenertor::GenerateColorDistribution(model.GetDistributionXZ());
+
+		polygons.reserve(model.GetHResolution() * model.GetVResolution());
+
+		for (int j = 0, szj = model.GetVResolution(); j < szj; ++j)
+		{
+			for (int i = 0, szi = model.GetHResolution(); i < szi; ++i)
+			{
+				GraphicsViewers::Polygon p;
+
+				p.vertex.emplace_back(horizontal[i]			, vertical[j + 1]);
+				p.vertex.emplace_back(horizontal[i + 1]		, vertical[j + 1]);
+				p.vertex.emplace_back(horizontal[i + 1]		, vertical[j]);
+				p.vertex.emplace_back(horizontal[i]			, vertical[j]);
+				
+				p.brush = colors[j][i];
+
+				polygons.push_back(p);
+			}
+		}
+		return polygons;
+	}
+}
 
 struct Controller::Impl
 {
@@ -40,32 +102,10 @@ Controller::~Controller() = default;
 void Controller::Draw()
 {
 	m_impl->dataSource->Refresh();
+	
+	m_impl->view3d->Clear();
+	m_impl->view3d->AddCurve("Trajectory", TrajectoryToCurve(m_impl->dataSource->GetTrajectory()));
 
-	{
-		m_impl->view3d->Clear();
-
-		const auto& trajectory = m_impl->dataSource->GetTrajectory();
-
-		GraphicsViewers::Curve curve;
-
-		curve.points.reserve(trajectory.Size());
-
-		for (size_t i = 0, sz = trajectory.Size(); i < sz; ++i)
-			curve.points.emplace_back(trajectory.GetX(i), trajectory.GetY(i), trajectory.GetZ(i));
-
-		curve.r = 0;
-		curve.g = 123;
-		curve.b = 167;
-
-		m_impl->view3d->AddCurve("Trajectory", std::move(curve));
-	}
-
-	{
-		m_impl->view2d->Clear();
-
-		std::vector<GraphicsViewers::Polygon> polygons;
-
-		m_impl->view2d->AddPolygons("Model", std::move(polygons));
-	}
-
+	m_impl->view2d->Clear();
+	m_impl->view2d->AddPolygons("Model", ModelToPolygons(m_impl->dataSource->GetModel()));
 }
