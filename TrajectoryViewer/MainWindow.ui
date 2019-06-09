@@ -16,18 +16,121 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QGridLayout" name="view3DLayout">
-      <item row="0" column="0">
-       <widget class="TrajectoryViewer::View3D" name="view3D" native="true"/>
-      </item>
-     </layout>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QWidget" name="pageTrajectory">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="GraphicsViewers::View3D" name="view3D" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pageModel">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="GraphicsViewers::View2D" name="viewt2D" native="true"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </item>
     <item>
-     <layout class="QGridLayout" name="view2DLayout">
-      <item row="0" column="0">
-       <widget class="TrajectoryViewer::View2D" name="viewt2D" native="true"/>
-      </item>
-     </layout>
+     <widget class="QWidget" name="buttonsWidget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>150</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QToolButton" name="trajectoryButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Trajectory</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="modelButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Model</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -63,15 +166,15 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>TrajectoryViewer::View3D</class>
-   <extends>QGLWidget</extends>
-   <header>GraphicsViewers/View3D.h</header>
+   <class>GraphicsViewers::View2D</class>
+   <extends>QWidget</extends>
+   <header>GraphicsViewers/View2D.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>TrajectoryViewer::View2D</class>
+   <class>GraphicsViewers::View3D</class>
    <extends>QWidget</extends>
-   <header>GraphicsViewers/View2D.h</header>
+   <header>GraphicsViewers/View3D.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

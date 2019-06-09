@@ -1,3 +1,5 @@
+# fork https://github.com/pstrom77/QPlot3D
+
 AddTarget(
 	NAME QPlot3D
 	SOURCE_DIR QPlot3D/

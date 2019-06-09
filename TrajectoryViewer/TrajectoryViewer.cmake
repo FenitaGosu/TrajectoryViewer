@@ -3,13 +3,12 @@ AddTarget(EXECUTABLE
 	SOURCE_DIR TrajectoryViewer/
 	SRC *.cpp *.h
 	QT_USE Core Widgets OpenGL
-	UI_FILES *.ui GraphicsViewers/*.ui
-	SUBDIRS	
-	Interfaces
+	UI_FILES *.ui
+	SUBDIRS
 	Controller
-	GraphicsViewers
 	DEPS
-	QPlot3D
+	GraphicsViewers
+	Geometry
 	Logic
 	XmlTools
 	FileWatcher

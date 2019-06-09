@@ -2,7 +2,7 @@
 
 #include "View3D.h"
 
-using namespace TrajectoryViewer;
+using namespace GraphicsViewers;
 
 struct View3D::Impl
 {
@@ -24,12 +24,12 @@ void View3D::Clear()
 	m_impl->curves.clear();
 }
 
-void View3D::AddLine(const std::string& name, std::vector<Point3D>&& points)
+void View3D::AddLine(const std::string& name, std::vector<Geometry::PointMD>&& points)
 {
 	m_impl->curves.emplace_back(QString::fromStdString(name));
 
 	for (const auto& p : points)
-		m_impl->curves.back().addData(p.x, p.y, p.z);
+		m_impl->curves.back().addData(p.X(), p.Y(), p.Z());
 
 	m_impl->curves.back().setColor(Qt::blue);
 	m_impl->curves.back().setLineWidth(2);

@@ -4,10 +4,10 @@
 #include "Logic/Data/Trajectory.h"
 #include "Logic/Data/Model.h"
 
-#include "Interfaces/IDataSource.h"
+#include "GraphicsViewers/Interfaces/I3DView.h"
+#include "GraphicsViewers/Interfaces/I2DView.h"
 
-#include "Interfaces/I3DView.h"
-#include "Interfaces/I2DView.h"
+#include "Interfaces/IDataSource.h"
 
 #include "Controller.h"
 
@@ -15,7 +15,7 @@ using namespace TrajectoryViewer;
 
 struct Controller::Impl
 {
-	Impl(std::unique_ptr<Logic::IDataSource>&& dataSource, I3DView* view3d, I2DView* view2d)
+	Impl(std::unique_ptr<Logic::IDataSource>&& dataSource, GraphicsViewers::I3DView* view3d, GraphicsViewers::I2DView* view2d)
 		: dataSource(std::move(dataSource))
 		, view3d(view3d)
 		, view2d(view2d)
@@ -23,11 +23,11 @@ struct Controller::Impl
 	}
 
 	std::unique_ptr<Logic::IDataSource> dataSource;
-	I3DView* view3d;
-	I2DView* view2d;
+	GraphicsViewers::I3DView* view3d;
+	GraphicsViewers::I2DView* view2d;
 };
 
-Controller::Controller(std::unique_ptr<Logic::IDataSource>&& dataSource, I3DView* view3d, I2DView* view2d)
+Controller::Controller(std::unique_ptr<Logic::IDataSource>&& dataSource, GraphicsViewers::I3DView* view3d, GraphicsViewers::I2DView* view2d)
 	: m_impl(std::make_unique<Impl>(std::move(dataSource), view3d, view2d))
 {
 }
@@ -42,7 +42,7 @@ void Controller::Draw()
 
 	const auto& trajectory = m_impl->dataSource->GetTrajectory();
 
-	std::vector<I3DView::Point3D> points;
+	std::vector<Geometry::PointMD> points;
 	points.reserve(trajectory.Size());
 
 	for (size_t i = 0, sz = trajectory.Size(); i < sz; ++i)

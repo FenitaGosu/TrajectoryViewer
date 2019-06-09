@@ -26,6 +26,20 @@ MainWindow::MainWindow(QWidget *parent)
 
 	connect(m_ui->action_Exit		, &QAction::triggered, this, &QMainWindow::close);
 	connect(m_ui->actionOpen_XML	, &QAction::triggered, this, &MainWindow::OnOpenXmlFile);
+
+	connect(m_ui->trajectoryButton, &QAbstractButton::toggled, [stacked = m_ui->stackedWidget, page = m_ui->pageTrajectory](bool value)
+	{
+		if (value)
+			stacked->setCurrentWidget(page);
+	});
+
+	connect(m_ui->modelButton, &QAbstractButton::toggled, [stacked = m_ui->stackedWidget, page = m_ui->pageModel](bool value)
+	{
+		if (value)
+			stacked->setCurrentWidget(page);
+	});
+
+	m_ui->trajectoryButton->setChecked(true);
 }
 
 MainWindow::~MainWindow() = default;

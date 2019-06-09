@@ -6,15 +6,16 @@ namespace Logic {
 	class IDataSource;
 }
 
+namespace GraphicsViewers {
+	class I2DView;
+	class I3DView;
+}
 namespace TrajectoryViewer {
-
-class I2DView;
-class I3DView;
 
 class Controller
 {
 public:
-	Controller(std::unique_ptr<Logic::IDataSource>&& dataSource, I3DView* view3d, I2DView* view2d);
+	Controller(std::unique_ptr<Logic::IDataSource>&& dataSource, GraphicsViewers::I3DView* view3d, GraphicsViewers::I2DView* view2d);
 	~Controller();
 
 	void Draw();

@@ -8,20 +8,18 @@
 
 #include "Interfaces/I3DView.h"
 
-namespace TrajectoryViewer {
+namespace GraphicsViewers {
 
 class View3D
 	: public QPlot3D
 	, public I3DView
 {
-	Q_OBJECT
-
 public:
 	explicit View3D(QWidget* parent = nullptr);
 	~View3D();
 	
 	void Clear() override;
-	void AddLine(const std::string& name, std::vector<Point3D>&& points) override;
+	void AddLine(const std::string& name, std::vector<Geometry::PointMD>&& points) override;
 
 private:
 	struct Impl;

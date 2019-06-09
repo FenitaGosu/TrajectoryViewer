@@ -5,6 +5,7 @@ project("TrajectoryViewer")
 find_package(Qt5Core)
 find_package(Qt5PrintSupport)
 find_package(Qt5Widgets)
+find_package(Qt5Charts)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install/")
@@ -23,6 +24,9 @@ include_directories(${CMAKE_SOURCE_DIR})
 include(addTaget.cmake)
 
 include(QPlot3D/QPlot3D.cmake)
+
+include(GraphicsViewers/GraphicsViewers.cmake)
+include(Geometry/Geometry.cmake)
 include(FileWatcher/FileWatcher.cmake)
 include(XmlTools/XmlTools.cmake)
 include(Logic/Logic.cmake)
