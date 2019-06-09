@@ -24,14 +24,14 @@ void View3D::Clear()
 	m_impl->curves.clear();
 }
 
-void View3D::AddLine(const std::string& name, std::vector<Geometry::PointMD>&& points)
+void View3D::AddCurve(const std::string& name, Curve&& curve)
 {
 	m_impl->curves.emplace_back(QString::fromStdString(name));
 
-	for (const auto& p : points)
+	for (const auto& p : curve.points)
 		m_impl->curves.back().addData(p.X(), p.Y(), p.Z());
 
-	m_impl->curves.back().setColor(Qt::blue);
+	m_impl->curves.back().setColor(QColor(curve.r, curve.g, curve.b));
 	m_impl->curves.back().setLineWidth(2);
 
 	addCurve(&m_impl->curves.back());

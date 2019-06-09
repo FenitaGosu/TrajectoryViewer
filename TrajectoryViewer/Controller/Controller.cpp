@@ -7,6 +7,9 @@
 #include "GraphicsViewers/Interfaces/I3DView.h"
 #include "GraphicsViewers/Interfaces/I2DView.h"
 
+#include "GraphicsViewers/Curve.h"
+#include "GraphicsViewers/Polygon.h"
+
 #include "Interfaces/IDataSource.h"
 
 #include "Controller.h"
@@ -38,15 +41,31 @@ void Controller::Draw()
 {
 	m_impl->dataSource->Refresh();
 
-	m_impl->view3d->Clear();
+	{
+		m_impl->view3d->Clear();
 
-	const auto& trajectory = m_impl->dataSource->GetTrajectory();
+		const auto& trajectory = m_impl->dataSource->GetTrajectory();
 
-	std::vector<Geometry::PointMD> points;
-	points.reserve(trajectory.Size());
+		GraphicsViewers::Curve curve;
 
-	for (size_t i = 0, sz = trajectory.Size(); i < sz; ++i)
-		points.emplace_back(trajectory.GetX(i), trajectory.GetY(i), trajectory.GetZ(i));
+		curve.points.reserve(trajectory.Size());
 
-	m_impl->view3d->AddLine("Trajectory", std::move(points));
+		for (size_t i = 0, sz = trajectory.Size(); i < sz; ++i)
+			curve.points.emplace_back(trajectory.GetX(i), trajectory.GetY(i), trajectory.GetZ(i));
+
+		curve.r = 0;
+		curve.g = 123;
+		curve.b = 167;
+
+		m_impl->view3d->AddCurve("Trajectory", std::move(curve));
+	}
+
+	{
+		m_impl->view2d->Clear();
+
+		std::vector<GraphicsViewers::Polygon> polygons;
+
+		m_impl->view2d->AddPolygons("Model", std::move(polygons));
+	}
+
 }

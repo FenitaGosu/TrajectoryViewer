@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Geometry/PointMD.h"
+#include "GraphicsViewers/Curve.h"
 
 namespace GraphicsViewers {
 
@@ -10,7 +10,7 @@ public:
 	virtual ~I3DView() = default;
 
 	virtual void Clear() = 0;
-	virtual void AddLine(const std::string& name, std::vector<Geometry::PointMD>&& points) = 0;
+	virtual void AddCurve(const std::string& name, Curve&& curve) = 0;
 };
 
 }

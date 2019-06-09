@@ -26,6 +26,6 @@ void View2D::Clear()
 	m_impl->chart->removeAllSeries();
 }
 
-void View2D::AddPolygons(const std::string& name, std::vector<Geometry::PointsMD>&& points)
+void View2D::AddPolygons(const std::string& name, std::vector<Polygon>&& polygons)
 {
 }

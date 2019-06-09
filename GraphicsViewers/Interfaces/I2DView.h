@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Geometry/PointMD.h"
+#include "GraphicsViewers/Polygon.h"
 
 namespace GraphicsViewers {
 
@@ -11,7 +11,7 @@ public:
 
 	virtual void Clear() = 0;
 
-	virtual void AddPolygons(const std::string& name, std::vector<Geometry::PointsMD>&& points) = 0;
+	virtual void AddPolygons(const std::string& name, std::vector<Polygon>&& polygons) = 0;
 };
 
 }

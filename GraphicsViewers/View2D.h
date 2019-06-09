@@ -17,7 +17,7 @@ public:
 	~View2D();
 
 	void Clear() override;
-	void AddPolygons(const std::string& name, std::vector<Geometry::PointsMD>&& points) override;
+	void AddPolygons(const std::string& name, std::vector<Polygon>&& polygons) override;
 
 private:
 	struct Impl;

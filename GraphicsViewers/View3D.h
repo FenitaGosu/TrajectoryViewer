@@ -19,7 +19,7 @@ public:
 	~View3D();
 	
 	void Clear() override;
-	void AddLine(const std::string& name, std::vector<Geometry::PointMD>&& points) override;
+	void AddCurve(const std::string& name, Curve&& curve) override;
 
 private:
 	struct Impl;
