@@ -25,10 +25,10 @@ public:
 	PointMD(std::initializer_list<double>&& coordinates);
 	PointMD(const size_t size);
 	PointMD(const PointMD& rhs);
-	PointMD(PointMD&& rhs);
+	PointMD(PointMD&& rhs) noexcept;
 
 	PointMD& operator =(const PointMD& rhs);
-	PointMD& operator =(PointMD&& rhs);
+	PointMD& operator =(PointMD&& rhs) noexcept;
 
 	void Resize(const size_t size);
 	size_t Size() const noexcept;

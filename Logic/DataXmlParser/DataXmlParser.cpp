@@ -44,7 +44,7 @@ bool DataXmlParser::ParseData(Trajectory& trajectory, Model& model)
 {
 	ClearElementParseFunctions();
 
-	const auto parseTrajectory = [&trajectory, &model](const std::map<std::string, std::string>& atributes, const std::string& data)
+	const auto parseTrajectory = [&trajectory](const std::map<std::string, std::string>& atributes, const std::string& data)
 	{
 		const auto it = atributes.find(TRAJECTORY_SIZE_ATR);
 
@@ -73,7 +73,7 @@ bool DataXmlParser::ParseData(Trajectory& trajectory, Model& model)
 		return true;
 	};
 
-	const auto parseModel = [&trajectory, &model](const std::map<std::string, std::string>& atributes, const std::string& data)
+	const auto parseModel = [&model](const std::map<std::string, std::string>& atributes, const std::string& data)
 	{
 
 #define PARSE_ATR(ATR, NAME, PARSE_FUNCTION)		\

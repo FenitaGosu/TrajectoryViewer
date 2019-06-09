@@ -1,6 +1,7 @@
 #include <cassert>
 
 #include <QFileSystemWatcher>
+#include <QObject>
 
 #include "QtFileWatcher.h"
 

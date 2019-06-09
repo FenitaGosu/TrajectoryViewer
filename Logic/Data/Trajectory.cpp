@@ -53,7 +53,7 @@ double Trajectory::GetZ(size_t index) const
 
 void Trajectory::AddNewData(Data&& data)
 {
-	m_impl->data.push_back(data);
+	m_impl->data.push_back(std::move(data));
 }
 
 void Trajectory::Reserve(size_t count)

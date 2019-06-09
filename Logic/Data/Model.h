@@ -9,8 +9,8 @@ class Model
 {
 public:
 	Model(	double hSize, double vSize,
-			double hOffset, double vOffset, 
-			int hResolution, int vResolution, 
+			double hOffset, double vOffset,
+			int hResolution, int vResolution,
 			double depth,
 			double angle1X, double angle2Z, double angle3X,
 			std::vector<std::vector<double>>&& distributionXZ
@@ -31,9 +31,9 @@ public:
 
 	double GetDepth() const noexcept;
 
-	double GetAgle1X() const noexcept;
-	double GetAgle2Z() const noexcept;
-	double GetAgle3X() const noexcept;
+	double GetAngle1X() const noexcept;
+	double GetAngle2Z() const noexcept;
+	double GetAngle3X() const noexcept;
 
 	const std::vector<std::vector<double>>& GetDistributionXZ() const noexcept;
 

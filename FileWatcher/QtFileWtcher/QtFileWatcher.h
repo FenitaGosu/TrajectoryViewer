@@ -10,7 +10,7 @@ class QString;
 
 namespace FileWatcher {
 
-class QtFileWatcher 
+class QtFileWatcher
 	: public QObject
 	, public IFileWatcher
 {

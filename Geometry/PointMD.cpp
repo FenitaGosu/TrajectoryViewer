@@ -39,7 +39,7 @@ PointMD::PointMD(const PointMD& rhs)
 {
 }
 
-PointMD::PointMD(PointMD&& rhs)
+PointMD::PointMD(PointMD&& rhs) noexcept
 	: m_coordinates(std::move(rhs.m_coordinates))
 {
 }
@@ -50,7 +50,7 @@ PointMD& PointMD::operator =(const PointMD& rhs)
 	return *this;
 }
 
-PointMD& PointMD::operator =(PointMD&& rhs)
+PointMD& PointMD::operator =(PointMD&& rhs) noexcept
 {
 	m_coordinates = std::move(rhs.m_coordinates);
 	return *this;
@@ -132,4 +132,3 @@ double& PointMD::operator [](const std::size_t num)
 {
 	return m_coordinates[num];
 }
-

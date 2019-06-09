@@ -88,17 +88,17 @@ double Model::GetDepth() const noexcept
 	return m_impl->depth;
 }
 
-double Model::GetAgle1X() const noexcept
+double Model::GetAngle1X() const noexcept
 {
 	return m_impl->angle1X;
 }
 
-double Model::GetAgle2Z() const noexcept
+double Model::GetAngle2Z() const noexcept
 {
 	return m_impl->angle2Z;
 }
 
-double Model::GetAgle3X() const noexcept
+double Model::GetAngle3X() const noexcept
 {
 	return m_impl->angle3X;
 }

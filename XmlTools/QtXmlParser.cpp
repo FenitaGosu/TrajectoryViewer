@@ -58,7 +58,7 @@ bool QtXmlParser::Parse()
 				return std::make_pair(atr.name().toString().toStdString(), atr.value().toString().toStdString());
 			});
 		}
-					
+
 		if (xmlReader.name().toString().toStdString() == ROOT_NAME)
 			continue;
 
@@ -69,7 +69,7 @@ bool QtXmlParser::Parse()
 		{
 			assert(!"Unable to parse item");
 			return false;
-		}			
+		}
 	}
 
 	if (xmlReader.hasError())

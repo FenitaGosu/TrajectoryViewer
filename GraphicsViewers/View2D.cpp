@@ -19,7 +19,6 @@ View2D::View2D(QWidget *parent)
 	, m_impl(std::make_unique<Impl>())
 {
 	setChart(m_impl->chart.get());
-	setRenderHint(QPainter::Antialiasing);
 
 	m_impl->chart->setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
 	setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
@@ -50,11 +49,12 @@ void View2D::AddPolygons(const std::string& name, std::vector<Polygon>&& polygon
 		QList<QPointF> points;
 		points.reserve(static_cast<int>(polygon.vertex.size()));
 
-		std::transform(polygon.vertex.cbegin(), polygon.vertex.cend(), std::back_inserter(points), [](const auto& point)->QPointF
+		std::transform(polygon.vertex.cbegin(), polygon.vertex.cend(), std::back_inserter(points), [](const auto& point)
 		{
 			return QPointF(point.X(), point.Y());
 		});
 
+		// close
 		points.append(QPointF(polygon.vertex.front().X(), polygon.vertex.front().Y()));
 
 		curve->append(points);
@@ -63,12 +63,4 @@ void View2D::AddPolygons(const std::string& name, std::vector<Polygon>&& polygon
 	}
 
 	m_impl->chart->createDefaultAxes();
-
-	m_impl->chart->axes(Qt::Horizontal).front()->setLinePenColor(Qt::black);
-	m_impl->chart->axes(Qt::Horizontal).front()->setLabelsColor(Qt::black);
-	m_impl->chart->axes(Qt::Horizontal).front()->setGridLineColor(Qt::black);
-
-	m_impl->chart->axes(Qt::Vertical).front()->setLinePenColor(Qt::black);
-	m_impl->chart->axes(Qt::Vertical).front()->setLabelsColor(Qt::black);
-	m_impl->chart->axes(Qt::Vertical).front()->setGridLineColor(Qt::black);
 }

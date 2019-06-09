@@ -4,19 +4,21 @@
 
 #include "BaseXmlParser.h"
 
-namespace XmlTools 
+namespace XmlTools
 {
-	class QtXmlParser : public BaseXmlParser
-	{
-	public:
-		QtXmlParser(const std::string& fileName);
-		~QtXmlParser();
 
-	protected:
-		bool Parse() override final;
+class QtXmlParser : public BaseXmlParser
+{
+public:
+	QtXmlParser(const std::string& fileName);
+	~QtXmlParser();
 
-	private:
-		struct Impl;
-		std::unique_ptr<Impl> m_impl;
-	};
+protected:
+	bool Parse() override final;
+
+private:
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
+};
+
 }
