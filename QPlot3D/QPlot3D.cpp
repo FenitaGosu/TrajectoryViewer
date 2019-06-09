@@ -1,6 +1,7 @@
 #include <QVector3D>
 #include <QVector2D>
 
+#include <QDebug>
 #include <QMenu>
 #include <QAction>
 
@@ -139,6 +140,7 @@ void QPlot3D::paintGL()
 
 	glTranslatef(mTranslate.x(), mTranslate.y(), mTranslate.z());
 
+	qDebug() << "mRotation" << mRotation.x() << mRotation.y() << mRotation.z();
 	glRotatef(mRotation.x() - 90, 1.0, 0.0, 0.0);
 	glRotatef(mRotation.y(), 0.0, 1.0, 0.0);
 	glRotatef(mRotation.z(), 0.0, 0.0, 1.0);

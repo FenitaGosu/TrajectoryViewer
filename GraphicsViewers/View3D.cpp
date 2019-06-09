@@ -13,6 +13,9 @@ View3D::View3D(QWidget *parent)
 	: QPlot3D(parent)
 	, m_impl(std::make_unique<Impl>())
 {
+	setRoll(30);
+	setPitch(180);
+	setYaw(-50);
 }
 
 View3D::~View3D() = default;
@@ -35,6 +38,4 @@ void View3D::AddCurve(const std::string& name, Curve&& curve)
 	m_impl->curves.back().setLineWidth(2);
 
 	addCurve(&m_impl->curves.back());
-
-	setAxisEqual(true);
 }

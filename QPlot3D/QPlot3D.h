@@ -64,19 +64,23 @@ public slots:
 	void toggleAxisEqual() {setAxisEqual(!mAxisEqual);}
 	void replot() {updateGL();}
 
-private:
+protected:
 	double roll()  const { return mRotation.x();  }
 	double pitch() const { return mRotation.y();  }
 	double yaw()   const { return mRotation.z();  }
+
+private:
 	void   drawLegend();
 	void   enable2D();
 	void   disable2D();
 	void   draw3DLine(QVector3D from, QVector3D to, double lineWidth, QColor color);
 
-private slots:
+protected slots:
 	void setRoll(double value)   { mRotation.setX(value);  updateGL(); }
 	void setPitch(double value)  { mRotation.setY(value);  updateGL(); }
 	void setYaw(double value)    { mRotation.setZ(value);  updateGL(); }
+
+private slots:
 	void rescaleAxis();
 	void axisEqual();
 	void axisTight();
