@@ -20,25 +20,25 @@ class QCurve3D : public QObject
 public:
 	QCurve3D();
 	QCurve3D(const QCurve3D& rhs);
-	QCurve3D(QString name);
+	QCurve3D(const QString& name);
 
-	QColor color() const { return mColor; }
-	double lineWidth() const { return mLineWidth; }
-	QVector3D& value(int index) { return mVertices[index]; }
-	const QVector3D& value(int index) const { return mVertices[index]; }
-	QRange range() const { return mRange; }
-	QString name() const { return mName; }
+	const QColor& color() const;
+	double lineWidth() const;
+	QVector3D& value(int index);
+	const QVector3D& value(int index) const;
+	const QRange& range() const;
+	const QString& name() const;
 
-	void setColor(QColor color) { mColor = color; }
-	void setLineWidth(int value) { mLineWidth = value; }
-	void setName(QString name) { mName = name; }
+	void setColor(const QColor& color);
+	void setLineWidth(int value);
+	void setName(const QString& name);
 
 	void addData(const double& x, const double& y, const double& z);
 	void addData(const QVector<double>& x, const QVector<double>& y, const QVector<double>& z);
 	void addData(const QVector<QVector3D>& data);
 	void addData(const QVector3D& data);
-	void clear() { mVertices.clear(); }
-	int size() const { return mVertices.size(); }
+	void clear();
+	int size() const;
 
 	QVector3D& operator[](int i);
 	const QVector3D& operator[](int i) const;

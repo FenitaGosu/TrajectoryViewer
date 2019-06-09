@@ -15,7 +15,7 @@ class QPlot3D: public QGLWidget
 friend class QAxis;
 
 public:
-	QPlot3D(QWidget* parent = NULL);
+	QPlot3D(QWidget* parent = nullptr);
 	~QPlot3D();
 
 	void addCurve(QCurve3D* curve);

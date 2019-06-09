@@ -21,8 +21,8 @@ public:
 	enum Axis
 	{
 		X_AXIS = 0,
-		Y_AXIS = 1,
-		Z_AXIS = 2
+		Y_AXIS,
+		Z_AXIS,
 	};
 
 public:
@@ -42,18 +42,18 @@ public:
 	void setLabelFont(const QFont& font);
 	void setTicksFont(const QFont& font);
 
-	const QRange& range() const { return mRange; }
-	bool   showPlane() const { return mShowPlane; }
-	bool   showGrid()  const { return mShowGrid; }
-	bool   showAxis()  const { return mShowAxis; }
-	bool   showLabel()  const { return mShowLabel; }
-	const QString& xLabel() const { return mXLabel; }
-	const QString yLabel() const { return mYLabel; }
-	const QColor& planeColor() const { return mPlaneColor; }
-	const QColor& gridColor() const { return mGridColor; }
-	const QColor& labelColor() const { return mLabelColor; }
-	const QFont& labelFont() const { return mLabelFont; }
-	const QFont& ticksFont() const { return mTicksFont; }
+	const QRange& range() const;
+	bool showPlane() const;
+	bool showGrid() const;
+	bool showAxis() const;
+	bool showLabel() const;
+	const QString& xLabel() const;
+	const QString yLabel() const;
+	const QColor& planeColor() const;
+	const QColor& gridColor() const;
+	const QColor& labelColor() const;
+	const QFont& labelFont() const;
+	const QFont& ticksFont() const;
 
 public slots:
 	void adjustPlaneView();
@@ -68,27 +68,27 @@ public slots:
 protected:
 	void draw() const;
 	void drawAxisBox() const;
-	void setPlot(QPlot3D* plot) { mPlot = plot; }
-	void setXLabel(const QString& label) { mXLabel = label; }
-	void setYLabel(const QString& label) { mYLabel = label; }
+	void setPlot(QPlot3D* plot);
+	void setXLabel(const QString& label);
+	void setYLabel(const QString& label);
 	double mScale;
 
 private:
 	void drawAxisPlane() const;
 	QVector<double> getTicks(double min, double max) const;
 	void setVisibleTicks(bool lower, bool right, bool upper, bool left);
-	void drawXTickLabel(QVector3D start, QVector3D stop, const QString& string) const;
+	void drawXTickLabel(const QVector3D& start, const QVector3D& stop, const QString& string) const;
 	bool isEmpty() const;
 
 private:
 	QPlot3D* mPlot;
 	QRange mRange;
-	Axis  mAxis;
+	Axis mAxis;
 	bool mAdjustPlaneView, mShowPlane, mShowGrid, mShowAxis, mShowLabel, mShowAxisBox;
 	QString mXLabel, mYLabel;
 	QColor mPlaneColor, mGridColor, mLabelColor;
 	QVector<double> mXTicks, mYTicks, mZTicks;
-	bool  mShowLowerTicks, mShowUpperTicks, mShowLeftTicks, mShowRightTicks;
+	bool mShowLowerTicks, mShowUpperTicks, mShowLeftTicks, mShowRightTicks;
 	double mTranslate;
 	QFont mLabelFont, mTicksFont;
 };

@@ -34,15 +34,15 @@ namespace
 }
 
 
-QPlot3D::QPlot3D(QWidget* parent) :
-	QGLWidget(QGLFormat(QGL::SampleBuffers), parent),
-	mBackgroundColor(Qt::white),
-	mTranslate(0, 0, -20),
-	mRotation(0, 0, 0),
-	mShowAzimuthElevation(true),
-	mShowLegend(true),
-	mAxisEqual(false),
-	mLegendFont("Helvetica", 12)
+QPlot3D::QPlot3D(QWidget* parent)
+	: QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
+	, mBackgroundColor(Qt::white)
+	, mTranslate(0, 0, -20)
+	, mRotation(0, 0, 0)
+	, mShowAzimuthElevation(false)
+	, mShowLegend(true)
+	, mAxisEqual(false)
+	, mLegendFont("Helvetica", 12)
 {
 	setAzimuth(130);
 	setElevation(30);
@@ -130,7 +130,6 @@ void QPlot3D::initializeGL()
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 }
 
 void QPlot3D::paintGL()
@@ -157,9 +156,7 @@ void QPlot3D::paintGL()
 	// DRAW CURVES
 	const int nCurves = mCurves.size();
 	for (int i = 0; i < nCurves; i++)
-	{
 		mCurves[i]->draw();
-	}
 
 	// DRAW AXIS BOX
 	mXAxis.drawAxisBox();
@@ -168,17 +165,11 @@ void QPlot3D::paintGL()
 
 	// DRAW LEGEND
 	if (mShowLegend)
-	{
 		drawLegend();
-	}
 
 	// DRAW ELEVATION AZIMUTH TEXT BOX
 	if (mShowAzimuthElevation)
-	{
 		drawTextBox(10, height() - 15, QString("Az: %1 El: %2").arg(azimuth(), 3, 'f', 1).arg(elevation(), 3, 'f', 1));
-	}
-
-
 }
 
 void QPlot3D::drawLegend()
@@ -195,7 +186,6 @@ void QPlot3D::drawLegend()
 		if (fontMetrics().width(string) > textWidth) textWidth = fontMetrics().width(string);
 		if (fontMetrics().height() > textHeight) textHeight = fontMetrics().height();
 	}
-
 
 	double tWidth = 5 + 20 + 5 + textWidth + 5;
 	double tHeight = 5 + nrCurves * textHeight + 5;
@@ -218,7 +208,6 @@ void QPlot3D::drawLegend()
 
 	for (int i = 0; i < nrCurves; i++)
 	{
-
 		x0 = width() - tWidth - 5;
 
 		enable2D();
@@ -233,8 +222,6 @@ void QPlot3D::drawLegend()
 		y0 += textHeight;
 		renderTextAtScreenCoordinates((int)x0, (int)y0, mCurves[i]->name(), mLegendFont);
 	}
-
-
 }
 
 void QPlot3D::drawTextBox(int x, int y, QString string, QFont font)
@@ -252,7 +239,6 @@ void QPlot3D::drawTextBox(int x, int y, QString string, QFont font)
 	renderTextAtScreenCoordinates(x, y, string, font);
 }
 
-
 void QPlot3D::enable2D()
 {
 	glPushMatrix();
@@ -263,7 +249,6 @@ void QPlot3D::enable2D()
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 }
 
 void QPlot3D::disable2D()
@@ -402,7 +387,6 @@ void QPlot3D::axisTight()
 
 QVector3D QPlot3D::cameraPositionInWorldCoordinates() const
 {
-
 	QVector3D tObjectCenter = mXAxis.range().center();
 
 	QQuaternion q1 = QQuaternion::fromAxisAndAngle(1.0, 0.0, 0.0, (mRotation.x() - 90));

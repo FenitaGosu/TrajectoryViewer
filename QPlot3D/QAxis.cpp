@@ -22,29 +22,29 @@ namespace
 	}
 }
 
-QAxis::QAxis() :
-	mRange(std::numeric_limits<double>::max(), -std::numeric_limits<double>::max()),
-	mAxis(X_AXIS),
-	mAdjustPlaneView(true),
-	mShowPlane(true),
-	mShowGrid(true),
-	mShowAxis(true),
-	mShowLabel(true),
-	mShowAxisBox(false),
-	mXLabel("X"),
-	mYLabel("Y"),
-	mPlaneColor(230, 230, 242),
-	mGridColor(128, 128, 128),
-	mLabelColor(0, 0, 0),
-	mShowLowerTicks(false),
-	mShowUpperTicks(false),
-	mShowLeftTicks(false),
-	mShowRightTicks(false),
-	mTranslate(0.0),
-	mScale(5.0),
-	mLabelFont("Helvetica", 12),
-	mTicksFont("Helvetica", 10)
-
+QAxis::QAxis()
+	: mPlot(nullptr)
+	, mRange(std::numeric_limits<double>::max(), -std::numeric_limits<double>::max())
+	, mAxis(X_AXIS)
+	, mAdjustPlaneView(true)
+	, mShowPlane(true)
+	, mShowGrid(true)
+	, mShowAxis(true)
+	, mShowLabel(true)
+	, mShowAxisBox(false)
+	, mXLabel("X")
+	, mYLabel("Y")
+	, mPlaneColor(230, 230, 242)
+	, mGridColor(128, 128, 128)
+	, mLabelColor(0, 0, 0)
+	, mShowLowerTicks(false)
+	, mShowUpperTicks(false)
+	, mShowLeftTicks(false)
+	, mShowRightTicks(false)
+	, mTranslate(0.0)
+	, mScale(5.0)
+	, mLabelFont("Helvetica", 12)
+	, mTicksFont("Helvetica", 10)
 {
 }
 
@@ -81,42 +81,52 @@ void QAxis::setAxis(const Axis& axis)
 {
 	mAxis = axis;
 }
+
 void QAxis::setAdjustPlaneView(bool value)
 {
 	mAdjustPlaneView = value;
 }
+
 void QAxis::setShowPlane(bool value)
 {
 	mShowPlane = value;
 }
+
 void QAxis::setShowGrid(bool value)
 {
 	mShowGrid = value;
 }
+
 void QAxis::setShowAxis(bool value)
 {
 	mShowAxis = value;
 }
+
 void QAxis::setShowLabel(bool value)
 {
 	mShowLabel = value;
 }
+
 void QAxis::setShowAxisBox(bool value)
 {
 	mShowAxisBox = value;
 }
+
 void QAxis::setPlaneColor(const QColor& color)
 {
 	mPlaneColor = color;
 }
+
 void QAxis::setGridColor(const QColor& color)
 {
 	mGridColor = color;
 }
+
 void QAxis::setLabelColor(const QColor& color)
 {
 	mLabelColor = color;
 }
+
 void QAxis::setLabelFont(const QFont& font)
 {
 	mLabelFont = font;
@@ -126,7 +136,67 @@ void QAxis::setTicksFont(const QFont& font)
 	mTicksFont = font;
 }
 
-QVector<double> QAxis::getTicks(double minValue, double maxValue)  const
+const QRange& QAxis::range() const
+{
+	return mRange;
+}
+
+bool QAxis::showPlane() const
+{
+	return mShowPlane;
+}
+
+bool QAxis::showGrid() const
+{
+	return mShowGrid;
+}
+
+bool QAxis::showAxis() const
+{
+	return mShowAxis;
+}
+
+bool QAxis::showLabel() const
+{
+	return mShowLabel;
+}
+
+const QString& QAxis::xLabel() const
+{
+	return mXLabel;
+}
+
+const QString QAxis::yLabel() const
+{
+	return mYLabel;
+}
+
+const QColor& QAxis::planeColor() const
+{
+	return mPlaneColor;
+}
+
+const QColor& QAxis::gridColor() const
+{
+	return mGridColor;
+}
+
+const QColor& QAxis::labelColor() const
+{
+	return mLabelColor;
+}
+
+const QFont& QAxis::labelFont() const
+{
+	return mLabelFont;
+}
+
+const QFont& QAxis::ticksFont() const
+{
+	return mTicksFont;
+}
+
+QVector<double> QAxis::getTicks(double minValue, double maxValue) const
 {
 	QVector<double> tTicks;
 	double step = (maxValue - minValue) / mScale;
@@ -152,7 +222,7 @@ QVector<double> QAxis::getTicks(double minValue, double maxValue)  const
 	return tTicks;
 }
 
-void QAxis::drawXTickLabel(QVector3D start, QVector3D stop, const QString& string) const
+void QAxis::drawXTickLabel(const QVector3D& start, const QVector3D& stop, const QString& string) const
 {
 	QRect textSize = mPlot->textSize(string);
 
@@ -160,7 +230,6 @@ void QAxis::drawXTickLabel(QVector3D start, QVector3D stop, const QString& strin
 	const QVector3D tmpStop = mPlot->toScreenCoordinates(stop.x(), stop.y(), 0.0);
 	const QVector2D tStart(tmpStart.x(), tmpStart.y());
 	const QVector2D tStop(tmpStop.x(), tmpStop.y());
-
 
 	QVector2D r = tStop - tStart;
 	QVector2D v = tStop;
@@ -244,7 +313,7 @@ void QAxis::drawAxisPlane() const
 	}
 
 	if (mShowAxis && mShowLowerTicks)
-{
+	{
 		mPlot->draw3DLine(QVector3D(minX, minY, 0), QVector3D(maxX + 0.5 * deltaX, minY, 0), 3, mLabelColor);
 	}
 	if (mShowLabel && mShowLowerTicks)
@@ -276,9 +345,7 @@ void QAxis::drawAxisPlane() const
 		mPlot->renderTextAtWorldCoordinates(QVector3D(maxX + 1.5 * deltaX, 0.5 * (maxY + minY), 0), mYLabel, mLabelFont);
 	}
 
-
 	glDisable(GL_POLYGON_OFFSET_FILL);
-
 }
 
 void QAxis::draw() const
@@ -316,7 +383,6 @@ void QAxis::drawAxisBox() const
 
 	glPushMatrix();
 
-
 	if (mShowAxisBox)
 	{
 		if (mAxis == X_AXIS)
@@ -347,6 +413,21 @@ void QAxis::drawAxisBox() const
 		mPlot->draw3DLine(QVector3D(mXTicks[0], mYTicks[mYTicks.size() - 1], mZTicks[mZTicks.size() - 1]), QVector3D(mXTicks[0], mYTicks[0], mZTicks[mZTicks.size() - 1]), 2, mLabelColor);
 	}
 	glPopMatrix();
+}
+
+void QAxis::setPlot(QPlot3D* plot)
+{
+	mPlot = plot;
+}
+
+void QAxis::setXLabel(const QString& label)
+{
+	mXLabel = label;
+}
+
+void QAxis::setYLabel(const QString& label)
+{
+	mYLabel = label;
 }
 
 void QAxis::setVisibleTicks(bool lower, bool right, bool upper, bool left)
@@ -456,22 +537,27 @@ void QAxis::togglePlane()
 {
 	mShowPlane = !mShowPlane;
 }
+
 void QAxis::toggleGrid()
 {
 	mShowGrid = !mShowGrid;
 }
+
 void QAxis::toggleAxis()
 {
 	mShowAxis = !mShowAxis;
 }
+
 void QAxis::toggleLabel()
 {
 	mShowLabel = !mShowLabel;
 }
+
 void QAxis::toggleAxisBox()
 {
 	mShowAxisBox = !mShowAxisBox;
 }
+
 void QAxis::toggleAdjustView()
 {
 	mAdjustPlaneView = !mAdjustPlaneView;
