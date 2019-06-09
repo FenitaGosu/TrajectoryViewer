@@ -30,13 +30,15 @@ DataSourceXml::DataSourceXml(std::unique_ptr<IDataXmlParser>&& xmlParser)
 
 DataSourceXml::~DataSourceXml() = default;
 
-void DataSourceXml::Refresh()
+bool DataSourceXml::Refresh()
 {
 	m_impl->trajectory	= std::make_unique<Trajectory>();
 	m_impl->model		= std::make_unique<Model>();
 
-	[[maybe_unused]] bool isSuccess = m_impl->xmlParser->ParseData(*m_impl->trajectory, *m_impl->model);
+	bool isSuccess = m_impl->xmlParser->ParseData(*m_impl->trajectory, *m_impl->model);
 	assert(isSuccess);
+
+	return isSuccess;
 }
 
 const Model& DataSourceXml::GetModel() const

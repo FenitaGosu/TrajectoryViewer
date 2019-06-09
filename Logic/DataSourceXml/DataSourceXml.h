@@ -14,7 +14,7 @@ public:
 	DataSourceXml(std::unique_ptr<IDataXmlParser>&& xmlParser);
 	~DataSourceXml();
 
-	void Refresh() override;
+	bool Refresh() override;
 
 	const Model& GetModel() const override;
 	const Trajectory& GetTrajectory() const override;

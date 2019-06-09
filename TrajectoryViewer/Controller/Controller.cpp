@@ -101,11 +101,12 @@ Controller::~Controller() = default;
 
 void Controller::Draw()
 {
-	m_impl->dataSource->Refresh();
-	
 	m_impl->view3d->Clear();
-	m_impl->view3d->AddCurve("Trajectory", TrajectoryToCurve(m_impl->dataSource->GetTrajectory()));
-
 	m_impl->view2d->Clear();
+
+	if (!m_impl->dataSource->Refresh())
+		return;
+	
+	m_impl->view3d->AddCurve("Trajectory", TrajectoryToCurve(m_impl->dataSource->GetTrajectory()));
 	m_impl->view2d->AddPolygons("Model", ModelToPolygons(m_impl->dataSource->GetModel()));
 }
