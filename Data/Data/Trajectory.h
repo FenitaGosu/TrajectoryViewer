@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace Logic {
+namespace Data {
 
 class Trajectory
 {

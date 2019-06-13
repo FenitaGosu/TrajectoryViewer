@@ -1,6 +1,6 @@
 #include "Model.h"
 
-using namespace Logic;
+using namespace Data;
 
 struct Model::Impl
 {

@@ -1,6 +1,6 @@
 AddTarget(
-	NAME Logic
-	SOURCE_DIR Logic/
+	NAME Data
+	SOURCE_DIR Data/
 	SRC *.cpp *.h
 	QT_USE Core
 	SUBDIRS

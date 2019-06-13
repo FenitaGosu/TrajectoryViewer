@@ -9,7 +9,7 @@ AddTarget(EXECUTABLE
 	DEPS
 	GraphicsViewers
 	Geometry
-	Logic
+	Data
 	XmlTools
 	FileWatcher
 	)

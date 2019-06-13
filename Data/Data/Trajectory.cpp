@@ -2,7 +2,7 @@
 
 #include "Trajectory.h"
 
-using namespace Logic;
+using namespace Data;
 
 struct Trajectory::Impl
 {

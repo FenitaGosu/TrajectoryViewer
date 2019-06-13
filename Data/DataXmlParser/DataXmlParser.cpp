@@ -5,7 +5,7 @@
 
 #include "DataXmlParser.h"
 
-using namespace Logic;
+using namespace Data;
 
 namespace {
 	const std::string TRAJECTORY_NAME	= "Trajectory";

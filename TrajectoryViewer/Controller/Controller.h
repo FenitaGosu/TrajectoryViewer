@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace Logic {
+namespace Data {
 	class IDataSource;
 }
 
@@ -15,7 +15,7 @@ namespace TrajectoryViewer {
 class Controller
 {
 public:
-	Controller(std::unique_ptr<Logic::IDataSource>&& dataSource, GraphicsViewers::I3DView* view3d, GraphicsViewers::I2DView* view2d);
+	Controller(std::unique_ptr<Data::IDataSource>&& dataSource, GraphicsViewers::I3DView* view3d, GraphicsViewers::I2DView* view2d);
 	~Controller();
 
 	void Draw();

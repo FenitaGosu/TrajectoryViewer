@@ -1,8 +1,9 @@
 #include <string>
 #include <vector>
 
-#include "Logic/Data/Trajectory.h"
-#include "Logic/Data/Model.h"
+#include "Data/Data/Trajectory.h"
+#include "Data/Data/Model.h"
+#include "Data/Interfaces/IDataSource.h"
 
 #include "GraphicsViewers/Interfaces/I3DView.h"
 #include "GraphicsViewers/Interfaces/I2DView.h"
@@ -11,15 +12,13 @@
 #include "GraphicsViewers/Polygon.h"
 #include "GraphicsViewers/ColorGradientGenertor.h"
 
-#include "Interfaces/IDataSource.h"
-
 #include "Controller.h"
 
 using namespace TrajectoryViewer;
 
 namespace
 {
-	GraphicsViewers::Curve TrajectoryToCurve(const Logic::Trajectory& trajectory)
+	GraphicsViewers::Curve TrajectoryToCurve(const Data::Trajectory& trajectory)
 	{
 		GraphicsViewers::Curve curve;
 
@@ -33,7 +32,7 @@ namespace
 		return curve;
 	}
 
-	std::vector<GraphicsViewers::Polygon> ModelToPolygons(const Logic::Model& model)
+	std::vector<GraphicsViewers::Polygon> ModelToPolygons(const Data::Model& model)
 	{
 		std::vector<GraphicsViewers::Polygon> polygons;
 
@@ -80,19 +79,19 @@ namespace
 
 struct Controller::Impl
 {
-	Impl(std::unique_ptr<Logic::IDataSource>&& dataSource, GraphicsViewers::I3DView* view3d, GraphicsViewers::I2DView* view2d)
+	Impl(std::unique_ptr<Data::IDataSource>&& dataSource, GraphicsViewers::I3DView* view3d, GraphicsViewers::I2DView* view2d)
 		: dataSource(std::move(dataSource))
 		, view3d(view3d)
 		, view2d(view2d)
 	{
 	}
 
-	std::unique_ptr<Logic::IDataSource> dataSource;
+	std::unique_ptr<Data::IDataSource> dataSource;
 	GraphicsViewers::I3DView* view3d;
 	GraphicsViewers::I2DView* view2d;
 };
 
-Controller::Controller(std::unique_ptr<Logic::IDataSource>&& dataSource, GraphicsViewers::I3DView* view3d, GraphicsViewers::I2DView* view2d)
+Controller::Controller(std::unique_ptr<Data::IDataSource>&& dataSource, GraphicsViewers::I3DView* view3d, GraphicsViewers::I2DView* view2d)
 	: m_impl(std::make_unique<Impl>(std::move(dataSource), view3d, view2d))
 {
 }

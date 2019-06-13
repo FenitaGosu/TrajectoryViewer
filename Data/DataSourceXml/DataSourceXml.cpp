@@ -8,7 +8,7 @@
 
 #include "DataSourceXml.h"
 
-using namespace Logic;
+using namespace Data;
 
 struct DataSourceXml::Impl
 {

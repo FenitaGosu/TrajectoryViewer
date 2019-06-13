@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Logic {
+namespace Data {
 
 class Model;
 class Trajectory;

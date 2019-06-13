@@ -4,7 +4,7 @@
 
 #include "Interfaces/IDataSource.h"
 
-namespace Logic {
+namespace Data {
 
 class IDataXmlParser;
 

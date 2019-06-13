@@ -5,11 +5,11 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include "Logic/Interfaces/IDataXmlParser.h"
-#include "Logic/DataXmlParser/DataXmlParser.h"
+#include "Data/Interfaces/IDataXmlParser.h"
+#include "Data/DataXmlParser/DataXmlParser.h"
 
-#include "Logic/Interfaces/IDataSource.h"
-#include "Logic/DataSourceXml/DataSourceXml.h"
+#include "Data/Interfaces/IDataSource.h"
+#include "Data/DataSourceXml/DataSourceXml.h"
 
 #include "FileWatcher/Interfaces/IFileWatcher.h"
 #include "FileWatcher/QtFileWtcher/QtFileWatcher.h"
@@ -51,8 +51,8 @@ void MainWindow::OnOpenXmlFile()
 	if (filePath.isEmpty())
 		return;
 
-	std::unique_ptr<Logic::IDataXmlParser> xmlParser	= std::make_unique<Logic::DataXmlParser>(filePath.toStdString());
-	std::unique_ptr<Logic::IDataSource> dataSource		= std::make_unique<Logic::DataSourceXml>(std::move(xmlParser));
+	std::unique_ptr<Data::IDataXmlParser> xmlParser		= std::make_unique<Data::DataXmlParser>(filePath.toStdString());
+	std::unique_ptr<Data::IDataSource> dataSource		= std::make_unique<Data::DataSourceXml>(std::move(xmlParser));
 	
 	m_controller	= std::make_unique<Controller>(std::move(dataSource), m_ui->view3D, m_ui->viewt2D);
 	m_fileWatcher	= std::make_unique<FileWatcher::QtFileWatcher>();

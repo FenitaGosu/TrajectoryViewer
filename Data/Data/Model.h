@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-namespace Logic {
+namespace Data {
 
 class Model
 {

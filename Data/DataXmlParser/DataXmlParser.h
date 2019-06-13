@@ -6,7 +6,7 @@
 
 #include "Interfaces/IDataXmlParser.h"
 
-namespace Logic {
+namespace Data {
 
 class Model;
 class Trajectory;
